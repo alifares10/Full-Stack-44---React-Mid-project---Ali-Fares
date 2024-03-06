@@ -92,13 +92,11 @@ const UserCard = (props) => {
           width: "100%",
         }}
       >
-        <div>
-          <button
-            onMouseOver={() => setMoreData(true)}
-            onMouseLeave={() => setMoreData(false)}
-          >
-            Other Data
-          </button>
+        <div
+          onMouseEnter={() => setMoreData(true)}
+          onMouseLeave={() => setMoreData(false)}
+        >
+          <button>Other Data</button>
           <div
             style={{
               alignItems: "start",
