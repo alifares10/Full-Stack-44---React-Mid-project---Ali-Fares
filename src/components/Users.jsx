@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import UserCard from "./UserCard";
 import Search from "./Search";
 import { getAll } from "../utils";
+import AddNewUser from "./AddNewUser";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -10,6 +11,7 @@ const Users = () => {
   const [usersWithPostsAndTodos, setUsersWithPostsAndTodos] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [isSearch, setIsSearch] = useState(false);
+  const [showAddUser, setShowAddUser] = useState(false);
 
   useEffect(() => {
     try {
@@ -21,7 +23,6 @@ const Users = () => {
         setUsers(data);
       };
       fetchUsers();
-      console.log("fetchUsers");
     } catch (error) {
       console.log(error);
       alert("Error");
@@ -38,7 +39,6 @@ const Users = () => {
         setPosts(data);
       };
       fetchUsers();
-      console.log("fetchPosts");
     } catch (error) {
       console.log(error);
       alert("Error");
@@ -55,7 +55,6 @@ const Users = () => {
         setTodos(data);
       };
       fetchUsers();
-      console.log("fetchTodos");
     } catch (error) {
       console.log(error);
       alert("Error");
@@ -78,7 +77,6 @@ const Users = () => {
 
   //filter users based on search
   const filterUsers = (search) => {
-    console.log("filterUsers");
     if (search !== "") {
       setIsSearch(true);
     } else {
@@ -92,6 +90,10 @@ const Users = () => {
     setFilteredUsers(tmp);
   };
 
+  const addNewUser = () => {
+    setShowAddUser(true);
+  };
+
   return (
     <div
       style={{
@@ -103,38 +105,67 @@ const Users = () => {
         border: "1px solid white",
       }}
     >
-      <Search filterUsers={filterUsers} />
-      {users.length === 0 ||
-      todos.length === 0 ||
-      posts.length === 0 ||
-      usersWithPostsAndTodos.length === 0 ? (
-        <h1>Loading...</h1>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+          border: "1px solid white",
+        }}
+      >
+        <p></p>
+        <Search filterUsers={filterUsers} />
+        <button
+          style={{
+            backgroundColor: "orange",
+            margin: "10px",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+          onClick={addNewUser}
+        >
+          Add
+        </button>
+      </div>
+      {showAddUser ? (
+        <AddNewUser showForm={setShowAddUser} />
       ) : (
         <>
-          {isSearch && filteredUsers.length === 0 ? (
-            <div
-              style={{
-                display: "flex",
-                height: "500px",
-                maxHeight: "100%",
-                justifyContent: "center",
-                flexDirection: "column",
-                border: "1px solid white",
-                margin: "10px",
-                padding: "10px",
-              }}
-            >
-              <h1>No Results Found...</h1>
-            </div>
+          {users.length === 0 ||
+          todos.length === 0 ||
+          posts.length === 0 ||
+          usersWithPostsAndTodos.length === 0 ? (
+            <h1>Loading...</h1>
           ) : (
             <>
-              {filteredUsers.length > 0
-                ? filteredUsers.map((user) => (
-                    <UserCard key={user.id} user={user} />
-                  ))
-                : usersWithPostsAndTodos.map((user) => (
-                    <UserCard key={user.id} user={user} />
-                  ))}
+              {isSearch && filteredUsers.length === 0 ? (
+                <div
+                  style={{
+                    display: "flex",
+                    height: "500px",
+                    maxHeight: "100%",
+                    justifyContent: "center",
+                    flexDirection: "column",
+                    border: "1px solid white",
+                    margin: "10px",
+                    padding: "10px",
+                  }}
+                >
+                  <h1>No Results Found...</h1>
+                </div>
+              ) : (
+                <>
+                  {filteredUsers.length > 0
+                    ? filteredUsers.map((user) => (
+                        <UserCard key={user.id} user={user} />
+                      ))
+                    : usersWithPostsAndTodos.map((user) => (
+                        <>
+                          <UserCard key={user.id} user={user} />
+                        </>
+                      ))}
+                </>
+              )}
             </>
           )}
         </>

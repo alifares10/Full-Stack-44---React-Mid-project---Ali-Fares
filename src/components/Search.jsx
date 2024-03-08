@@ -10,9 +10,9 @@ const Search = (props) => {
         display: "flex",
         justifyContent: "center",
         flexDirection: "column",
-        border: "1px solid white",
         margin: "10px",
         padding: "10px",
+        width: "350px",
       }}
     >
       <label htmlFor="search">Search</label>
