@@ -15,10 +15,12 @@ const UserCard = (props) => {
       const completed = user.todos.filter((todo) => todo.completed === false);
       if (completed.length > 0) {
         setHasUnCompletedTodos(true);
+      } else {
+        setHasUnCompletedTodos(false);
       }
     };
     checkCompletedTodos();
-  }, []);
+  }, [props.users]);
 
   const closeMoreData = () => {
     setMoreData(false);
@@ -43,28 +45,40 @@ const UserCard = (props) => {
       name,
       email,
     };
-    const response = await update(
-      "https://jsonplaceholder.typicode.com/users",
-      id,
-      data
-    );
-    alert(
-      "User Updated ," +
-        "Name: " +
-        response.data.name +
-        " ," +
-        "Email: " +
-        response.data.email
-    );
+    // const response = await update(
+    //   "https://jsonplaceholder.typicode.com/users",
+    //   id,
+    //   data
+    // );
+    // alert(
+    //   "User Updated ," +
+    //     "Name: " +
+    //     response.data.name +
+    //     " ," +
+    //     "Email: " +
+    //     response.data.email
+    // );
+    const updatedUsers = props.users.map((user) => {
+      if (user.id === id) {
+        return { ...user, name, email };
+      }
+      return user;
+    });
+    props.setUsers(updatedUsers);
+    alert("User Updated ");
   };
 
   const deleteUserData = async () => {
     const id = user.id;
-    const response = await remove(
-      "https://jsonplaceholder.typicode.com/users",
-      id
-    );
-    console.log(response.data);
+    //if im trying to delete user from filtered users
+    if (props.filteredUsers) {
+      props.setFilteredUsers(
+        props.filteredUsers.filter((user) => user.id !== id)
+      );
+      props.setUsers(props.users.filter((user) => user.id !== id));
+    } else {
+      props.setUsers(props.users.filter((user) => user.id !== id));
+    }
     alert("User Deleted ");
   };
 
@@ -223,7 +237,7 @@ const UserCard = (props) => {
                     border: "1px solid white",
                   }}
                 >
-                  {props.user.address.city}
+                  {props.user.address ? props.user.address.city : ""}
                 </p>
               </div>
               <div
@@ -246,7 +260,7 @@ const UserCard = (props) => {
                     border: "1px solid white",
                   }}
                 >
-                  {props.user.address.street}
+                  {props.user.address ? props.user.address.street : ""}
                 </p>
               </div>
               <div
@@ -269,14 +283,20 @@ const UserCard = (props) => {
                     border: "1px solid white",
                   }}
                 >
-                  {props.user.address.zipcode}
+                  {props.user.address ? props.user.address.zipcode : ""}
                 </p>
               </div>
             </div>
           )}
         </div>
       </form>
-      <UserTodosModal user={user} isOpen={isShowTodos} onClose={closeTodos} />
+      <UserTodosModal
+        user={user}
+        isOpen={isShowTodos}
+        onClose={closeTodos}
+        setUsers={props.setUsers}
+        users={props.users}
+      />
     </div>
   );
 };

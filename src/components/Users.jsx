@@ -15,6 +15,7 @@ const Users = () => {
 
   useEffect(() => {
     try {
+      console.log("fetching users");
       const fetchUsers = async () => {
         const response = await getAll(
           "https://jsonplaceholder.typicode.com/users"
@@ -31,6 +32,7 @@ const Users = () => {
 
   useEffect(() => {
     try {
+      console.log("fetching posts");
       const fetchUsers = async () => {
         const response = await getAll(
           "https://jsonplaceholder.typicode.com/posts"
@@ -47,6 +49,7 @@ const Users = () => {
 
   useEffect(() => {
     try {
+      console.log("fetching todos");
       const fetchUsers = async () => {
         const response = await getAll(
           "https://jsonplaceholder.typicode.com/todos"
@@ -128,7 +131,11 @@ const Users = () => {
         </button>
       </div>
       {showAddUser ? (
-        <AddNewUser showForm={setShowAddUser} />
+        <AddNewUser
+          showForm={setShowAddUser}
+          setUsers={setUsers}
+          users={users}
+        />
       ) : (
         <>
           {users.length === 0 ||
@@ -157,11 +164,23 @@ const Users = () => {
                 <>
                   {filteredUsers.length > 0
                     ? filteredUsers.map((user) => (
-                        <UserCard key={user.id} user={user} />
+                        <UserCard
+                          key={user.id}
+                          user={user}
+                          users={filteredUsers}
+                          setUsers={setFilteredUsers}
+                          filteredUsers={filteredUsers}
+                          setFilteredUsers={setFilteredUsers}
+                        />
                       ))
                     : usersWithPostsAndTodos.map((user) => (
                         <>
-                          <UserCard key={user.id} user={user} />
+                          <UserCard
+                            key={user.id}
+                            user={user}
+                            users={usersWithPostsAndTodos}
+                            setUsers={setUsersWithPostsAndTodos}
+                          />
                         </>
                       ))}
                 </>

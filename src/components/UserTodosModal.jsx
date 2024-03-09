@@ -16,20 +16,38 @@ const UserTodosModal = (props) => {
   };
 
   const handleTodoUpdate = async (id) => {
-    try {
-      const response = await update(
-        `https://jsonplaceholder.typicode.com/todos/`,
-        id,
-        {
-          completed: true,
-        }
-      );
-      console.log(response.data);
-      alert("Todo Completed");
-    } catch (error) {
-      console.log(error);
-      alert("Error");
-    }
+    // try {
+    //   const response = await update(
+    //     `https://jsonplaceholder.typicode.com/todos/`,
+    //     id,
+    //     {
+    //       completed: true,
+    //     }
+    //   );
+    //   console.log(response.data);
+    //   alert("Todo Completed");
+    // } catch (error) {
+    //   console.log(error);
+    //   alert("Error");
+    // }
+
+    //update user todos
+    const updatedTodos = user.todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, completed: true };
+      }
+      return todo;
+    });
+    //update the user
+    const updatedUser = { ...user, todos: updatedTodos };
+    //update all the users
+    const updatedUsers = props.users.map((user) => {
+      if (user.id === updatedUser.id) {
+        return updatedUser;
+      }
+      return user;
+    });
+    props.setUsers(updatedUsers);
   };
   return (
     <div className="modal-overlay">
@@ -60,7 +78,12 @@ const UserTodosModal = (props) => {
             </button>
           </div>
           {showAddTodo ? (
-            <AddTodoForm showForm={setShowAddTodo} user={user} />
+            <AddTodoForm
+              showForm={setShowAddTodo}
+              user={user}
+              setUsers={props.setUsers}
+              users={props.users}
+            />
           ) : (
             <>
               {user.todos.map((todo) => (
@@ -118,7 +141,12 @@ const UserTodosModal = (props) => {
             </button>
           </div>
           {showAddPost ? (
-            <AddPostForm showForm={setShowAddPost} user={user} />
+            <AddPostForm
+              showForm={setShowAddPost}
+              user={user}
+              setUsers={props.setUsers}
+              users={props.users}
+            />
           ) : (
             <>
               {user.posts.map((post) => (
