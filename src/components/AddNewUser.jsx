@@ -1,5 +1,4 @@
 import React from "react";
-import { create } from "../utils";
 
 const AddNewUser = (props) => {
   const addUser = async (e) => {
@@ -11,20 +10,6 @@ const AddNewUser = (props) => {
       email,
       id: props.users.length + 1,
     };
-    // try {
-    //   const response = await create(
-    //     "https://jsonplaceholder.typicode.com/users",
-    //     newUser
-    //   );
-    //   const data = await response.data;
-    //   console.log(data);
-    //   props.showForm(false);
-    //   alert("User added successfully");
-    // } catch (error) {
-    //   console.log(error);
-    //   alert("Error");
-    // }
-
     const updatedUsers = [...props.users, newUser];
     props.setUsers(updatedUsers);
     props.showForm(false);

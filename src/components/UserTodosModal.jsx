@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { update } from "../utils";
 import "../css/UserTodosModal.css";
 import AddTodoForm from "./AddTodoForm";
 import AddPostForm from "./AddPostForm";
@@ -16,21 +15,6 @@ const UserTodosModal = (props) => {
   };
 
   const handleTodoUpdate = async (id) => {
-    // try {
-    //   const response = await update(
-    //     `https://jsonplaceholder.typicode.com/todos/`,
-    //     id,
-    //     {
-    //       completed: true,
-    //     }
-    //   );
-    //   console.log(response.data);
-    //   alert("Todo Completed");
-    // } catch (error) {
-    //   console.log(error);
-    //   alert("Error");
-    // }
-
     //update user todos
     const updatedTodos = user.todos.map((todo) => {
       if (todo.id === id) {

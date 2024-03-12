@@ -1,5 +1,4 @@
 import React from "react";
-import { create } from "../utils";
 
 const AddTodoForm = (props) => {
   const addTodo = async (e) => {
@@ -10,18 +9,6 @@ const AddTodoForm = (props) => {
       completed: false,
       userId: props.user.id,
     };
-    // try {
-    //   const response = await create(
-    //     "https://jsonplaceholder.typicode.com/todos",
-    //     data
-    //   );
-    //   console.log(response.data);
-    //   props.showForm(false);
-    //   alert("Todo Added");
-    // } catch (error) {
-    //   console.log(error);
-    //   alert("Error");
-    // }
     const updatedTodos = [...props.user.todos, data];
     const updatedUser = { ...props.user, todos: updatedTodos };
     const updatedUsers = props.users.map((user) => {

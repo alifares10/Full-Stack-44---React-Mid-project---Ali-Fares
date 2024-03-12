@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { update, remove } from "../utils";
 import UserTodosModal from "./UserTodosModal";
 
 const UserCard = (props) => {
@@ -45,19 +44,6 @@ const UserCard = (props) => {
       name,
       email,
     };
-    // const response = await update(
-    //   "https://jsonplaceholder.typicode.com/users",
-    //   id,
-    //   data
-    // );
-    // alert(
-    //   "User Updated ," +
-    //     "Name: " +
-    //     response.data.name +
-    //     " ," +
-    //     "Email: " +
-    //     response.data.email
-    // );
     const updatedUsers = props.users.map((user) => {
       if (user.id === id) {
         return { ...user, name, email };

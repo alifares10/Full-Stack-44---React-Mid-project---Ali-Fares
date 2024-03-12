@@ -4,6 +4,7 @@ const Search = (props) => {
   const handleSearch = (event) => {
     props.filterUsers(event.target.value);
   };
+
   return (
     <div
       style={{

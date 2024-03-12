@@ -1,5 +1,4 @@
 import React from "react";
-import { create } from "../utils";
 
 const AddPostForm = (props) => {
   const addPost = async (e) => {
@@ -11,18 +10,6 @@ const AddPostForm = (props) => {
       body,
       userId: props.user.id,
     };
-    // try {
-    //   const response = await create(
-    //     "https://jsonplaceholder.typicode.com/posts",
-    //     data
-    //   );
-    //   console.log(response.data);
-    //   props.showForm(false);
-    //   alert("Post Added");
-    // } catch (error) {
-    //   console.log(error);
-    //   alert("Error");
-    // }
     const updatedPosts = [...props.user.posts, data];
     const updatedUser = { ...props.user, posts: updatedPosts };
     const updatedUsers = props.users.map((user) => {
